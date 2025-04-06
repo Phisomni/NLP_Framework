@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.ipynb_checkpoints/
+
+# Jupyter output
+notebooks/*.ipynb
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environments
+.env
+.venv/
+venv/
+env/
+
+# Data
+data/raw/*.txt
+data/raw_pdfs/
+data/processed/
