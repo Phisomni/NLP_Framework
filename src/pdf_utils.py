@@ -2,6 +2,9 @@
 
 from pdfminer.high_level import extract_text
 import os
+import logging
+
+logging.getLogger("pdfminer").setLevel(logging.ERROR)
 
 def extract_text_from_pdf(filepath):
     """

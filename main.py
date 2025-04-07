@@ -7,10 +7,10 @@ import os
 def main():
     # Initialize framework
     framework = TextAnalysisFramework()
-
+    
     # Load stop words
     framework.load_stop_words("data/stopwords.txt")
-
+    
     # Loop through all PDFs in data/raw_pdfs
     pdf_dir = "data/raw_pdfs"
     raw_txt_dir = "data/raw"
@@ -33,9 +33,14 @@ def main():
 
             # Load into framework
             framework.load_text(text_file, label=label)
-
+    
     # Run visualizations after all files are loaded
-    framework.wordcount_sankey(k=10)
+    word_list = ["capitalism", "gender", "race", "law", "ethics", "environment", "culture", 
+                "technology", "politics", "identity", "justice", "data", "globalization", 
+                "revolution", "nation", "rights", "future", "research", "experiential"]
+
+    
+    framework.wordcount_sankey(k=10, word_list=word_list)
     framework.your_second_visualization()
     framework.your_third_visualization()
 
