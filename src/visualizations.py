@@ -4,19 +4,28 @@ from collections import Counter
 import numpy as np
 
 
-def plot_sankey(word_counts, word_list=None, k=5):
+def plot_sankey(word_counts, word_list=None, k=5, cluster_map=None, cluster_colors=None):
     """
     Generate a Sankey diagram showing the frequency of selected words across multiple texts.
+    Connections (links) are color-coded by department cluster.
 
     Args:
-        word_counts (dict): Dictionary mapping text labels to word frequency dictionaries.
-        word_list (list, optional): Specific words to include in the diagram. If None, 
-            selects the top-k most common words across all texts.
-        k (int, optional): Number of top words to use if word_list is not provided.
+        word_counts (dict): Mapping from department to word frequency dict.
+        word_list (list, optional): List of words to visualize. Uses top-k if None.
+        k (int, optional): Top-k most frequent words to visualize if no word_list is provided.
+        cluster_map (dict, optional): Mapping from department label to cluster label.
+        cluster_colors (dict, optional): Mapping from cluster label to color.
 
     Produces:
-        Interactive Sankey diagram visualizing word distribution by document.
+        Interactive Sankey diagram.
     """
+    import plotly.graph_objects as go
+    from collections import Counter
+
+    # Fallback to empty maps if not provided
+    cluster_map = cluster_map or {}
+    cluster_colors = cluster_colors or {}
+
     if word_list is None:
         all_words = []
         for counts in word_counts.values():
@@ -25,23 +34,45 @@ def plot_sankey(word_counts, word_list=None, k=5):
     else:
         common_words = word_list
 
-    labels = list(word_counts.keys()) + common_words
-    sources, targets, values = [], [], []
+    departments = list(word_counts.keys())
+    labels = departments + common_words
+    sources, targets, values, link_colors = [], [], [], []
 
-    for i, doc in enumerate(word_counts):
+    for i, dept in enumerate(departments):
+        cluster = cluster_map.get(dept, "Other")
+        color = cluster_colors.get(cluster, "gray")
         for word in common_words:
-            count = word_counts[doc].get(word, 0)
+            count = word_counts[dept].get(word, 0)
             if count > 0:
                 sources.append(i)
-                targets.append(len(word_counts) + common_words.index(word))
+                targets.append(len(departments) + common_words.index(word))
                 values.append(count)
+                link_colors.append(color)
+
+    # Simple neutral color for all nodes
+    node_colors = ["#eeeeee"] * len(labels)
 
     fig = go.Figure(data=[go.Sankey(
-        node=dict(label=labels),
-        link=dict(source=sources, target=targets, value=values)
+        node=dict(
+            label=labels,
+            color=node_colors,
+            pad=15,
+            thickness=20
+        ),
+        link=dict(
+            source=sources,
+            target=targets,
+            value=values,
+            color=link_colors
+        )
     )])
-    fig.update_layout(title_text="Word Frequency Sankey Diagram", font_size=12)
+
+    fig.update_layout(
+        title_text="Word Frequency Sankey Diagram (Colored by Department Cluster)",
+        font_size=12
+    )
     fig.show()
+
 
 
 def plot_wordcount_subplots(word_counts, k=10, p=4):

@@ -39,15 +39,41 @@ def main():
             framework.load_text(text_file, label=label)
     
     # run visualizations after all files are loaded
-    word_list = ["gender", "race", "ethics", "environment", "culture", "technology", 
-                "politics", "identity", "data", "revolution", 
-                "rights", "future", "research", "experiential", "industry"]
+    word_list = ["ethics", "environment", "culture", "technology", "innovation",
+                "politics", "data", "new", "impact", "rights", "future", "research", 
+                "experiential", "industry"]
 
-    framework.wordcount_sankey(word_list=word_list)
-    framework.your_second_visualization()
-    framework.your_third_visualization()
-    framework.your_fourth_visualization()
-    framework.your_fifth_visualization()
+    cluster_map = {
+    "Philosophy and Religion": "Humanities",
+    "English": "Humanities",
+    "History": "Humanities",
+    "Political Science": "Social Sciences",
+    "Psychology": "Social Sciences",
+    "School of Journalism": "Social Sciences",
+    "Music": "Arts",
+    "School of Nursing": "STEM",
+    "Chemistry and Chemical Biology": "STEM",
+    "Mathematics": "STEM",
+    "Computer Science": "STEM",
+    "Business": "Professional"
+    }   
+
+    cluster_colors = {
+    "Humanities": "salmon",
+    "Social Sciences": "lightblue",
+    "Arts": "orchid",
+    "STEM": "lightseagreen",
+    "Professional": "gold",
+    "Other": "gray"
+    }
+
+    framework.wordcount_sankey(word_list=word_list,
+                                cluster_map=cluster_map,
+                                cluster_colors=cluster_colors)
+    framework.top_word_subplots()
+    framework.readability_bar()
+    framework.sentiment_bar()
+    framework.radar()
 
 if __name__ == "__main__":
     main()

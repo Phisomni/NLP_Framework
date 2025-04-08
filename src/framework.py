@@ -62,7 +62,7 @@ class TextAnalysisFramework:
 
     # visualization functions
 
-    def wordcount_sankey(self, word_list=None, k=5):
+    def wordcount_sankey(self, word_list=None, k=5, cluster_map=None, cluster_colors=None):
         """
         Generate a Sankey diagram for word counts across texts.
         
@@ -70,9 +70,12 @@ class TextAnalysisFramework:
             word_list (list, optional): List of specific words to include in the visualization.
                                        If None, top words will be used.
             k (int, optional): Number of top words to include if word_list is None. Defaults to 5.
+            cluster_map (dict, optional): Dict mapping from department label to cluster label.
+            cluster_colors (dict, optional) Dict mapping from cluster label to hex or named color.
         """
         from .visualizations import plot_sankey
-        plot_sankey(self.data["word_count"], word_list, k)
+        plot_sankey(self.data["word_count"], word_list=word_list, k=k,
+            cluster_map=cluster_map, cluster_colors=cluster_colors)
 
     def top_word_subplots(self, k=10, p=4):
         """
@@ -163,6 +166,3 @@ class TextAnalysisFramework:
         with open(outfile, "w", encoding="utf-8") as f:
             for word in sorted(self.stop_words):
                 f.write(word + "\n")
-
-
-
