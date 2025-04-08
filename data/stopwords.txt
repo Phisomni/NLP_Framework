@@ -125,3 +125,16 @@ just
 don
 should
 now
+b
+c
+d
+f
+grade
+pass
+fail
+credit
+minimum
+hours
+prerequisites
+corequisites
+students

@@ -1,17 +1,21 @@
-# main.py
-
 from src.framework import TextAnalysisFramework
 from src.pdf_utils import extract_text_from_pdf
 import os
+import matplotlib
+matplotlib.use("TkAgg")
 
 def main():
-    # Initialize framework
+    # initialize framework
     framework = TextAnalysisFramework()
     
-    # Load stop words
+    # load stop words
     framework.load_stop_words("data/stopwords.txt")
+    extra_stopwords = ["nupath", "attributes", "offers", "cs", "ge", "math", "phil", 
+                       "psyc", "chem", "engw", "engl", "hist", "musc", "pols", "jrnl", 
+                       "may", "fina", "nsrg", "musi"]
+    framework.update_stopwords(extra_stopwords, action="add")
     
-    # Loop through all PDFs in data/raw_pdfs
+    # loop through all PDFs in data/raw_pdfs
     pdf_dir = "data/raw_pdfs"
     raw_txt_dir = "data/raw"
     os.makedirs(raw_txt_dir, exist_ok=True)
@@ -20,10 +24,10 @@ def main():
         if filename.endswith(".pdf"):
             pdf_path = os.path.join(pdf_dir, filename)
 
-            # Use file name (minus extension) as label
+            # use file name w/o extension as label
             label = os.path.splitext(filename)[0]
 
-            # Extract and save text
+            # extract and save text
             print(f"Processing: {label}")
             raw_text = extract_text_from_pdf(pdf_path)
             text_file = os.path.join(raw_txt_dir, f"{label}.txt")
@@ -31,18 +35,19 @@ def main():
             with open(text_file, "w", encoding="utf-8") as f:
                 f.write(raw_text)
 
-            # Load into framework
+            # load into framework
             framework.load_text(text_file, label=label)
     
-    # Run visualizations after all files are loaded
-    word_list = ["capitalism", "gender", "race", "law", "ethics", "environment", "culture", 
-                "technology", "politics", "identity", "justice", "data", "globalization", 
-                "revolution", "nation", "rights", "future", "research", "experiential"]
+    # run visualizations after all files are loaded
+    word_list = ["gender", "race", "ethics", "environment", "culture", "technology", 
+                "politics", "identity", "data", "revolution", 
+                "rights", "future", "research", "experiential", "industry"]
 
-    
-    framework.wordcount_sankey(k=10, word_list=word_list)
+    framework.wordcount_sankey(word_list=word_list)
     framework.your_second_visualization()
     framework.your_third_visualization()
+    framework.your_fourth_visualization()
+    framework.your_fifth_visualization()
 
 if __name__ == "__main__":
     main()

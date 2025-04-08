@@ -6,6 +6,7 @@ __pycache__/
 
 # Jupyter output
 notebooks/*.ipynb
+*.ipynb
 
 # OS files
 .DS_Store

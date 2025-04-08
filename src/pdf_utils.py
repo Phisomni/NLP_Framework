@@ -1,5 +1,3 @@
-# src/pdf_utils.py
-
 from pdfminer.high_level import extract_text
 import os
 import logging
