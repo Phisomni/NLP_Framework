@@ -92,7 +92,7 @@ def default_parser(text, stop_words=set()):
         readability = 50  # Fallback if textstat fails
 
     if len(valid_sentences) < 3:
-        print("⚠️ Not enough valid sentences. Using fallback readability = 50.")
+        print("Not enough valid sentences. Using fallback readability = 50.")
         readability = 50
 
     # Step 6: Compute sentiment using VADER

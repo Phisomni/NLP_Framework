@@ -66,12 +66,7 @@ class TextAnalysisFramework:
         """
         Generate a Sankey diagram for word counts across texts.
         
-        Args:
-            word_list (list, optional): List of specific words to include in the visualization.
-                                       If None, top words will be used.
-            k (int, optional): Number of top words to include if word_list is None. Defaults to 5.
-            cluster_map (dict, optional): Dict mapping from department label to cluster label.
-            cluster_colors (dict, optional) Dict mapping from cluster label to hex or named color.
+        The visualization displays how often buzzwords appear across different texts.
         """
         from .visualizations import plot_sankey
         plot_sankey(self.data["word_count"], word_list=word_list, k=k,

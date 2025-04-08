@@ -22,7 +22,7 @@ def plot_sankey(word_counts, word_list=None, k=5, cluster_map=None, cluster_colo
     import plotly.graph_objects as go
     from collections import Counter
 
-    # Fallback to empty maps if not provided
+    # fallback to empty maps if not provided
     cluster_map = cluster_map or {}
     cluster_colors = cluster_colors or {}
 
@@ -49,7 +49,7 @@ def plot_sankey(word_counts, word_list=None, k=5, cluster_map=None, cluster_colo
                 values.append(count)
                 link_colors.append(color)
 
-    # Simple neutral color for all nodes
+    # simple neutral color for all nodes
     node_colors = ["#eeeeee"] * len(labels)
 
     fig = go.Figure(data=[go.Sankey(

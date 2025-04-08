@@ -39,8 +39,8 @@ def main():
             framework.load_text(text_file, label=label)
     
     # run visualizations after all files are loaded
-    word_list = ["ethics", "environment", "culture", "technology", "innovation",
-                "politics", "data", "new", "impact", "rights", "future", "research", 
+    word_list = ["ethics", "world", "culture", "technology", "innovation",
+                "politics", "data", "new", "impact", "rights", "research", 
                 "experiential", "industry"]
 
     cluster_map = {
